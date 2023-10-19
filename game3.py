@@ -2,6 +2,8 @@ import pygame
 import sys
 import random
 
+from fish import Fish, fishes #importing a class and a Sprite group
+
 #initalize pygame
 pygame.init()
 
@@ -15,12 +17,15 @@ pygame.display.set_caption("A beautiful beach in San Diego")
 #load our game font
 custom_font = pygame.font.Font("assets/fonts/Brainfish_Rush.ttf", 128)
 
-
 def draw_background(surf):
     #load our tiles
     water = pygame.image.load('assets/sprites/water.png').convert()
     sand = pygame.image.load('assets/sprites/sand_top.png').convert()
     seagrass = pygame.image.load('assets/sprites/seagrass.png').convert()
+
+    green_fish=pygame.transform.flip(green_fish, True, False)
+    orange_fish=pygame.transform.flip(orange_fish, True, False)
+    puffer_fish=pygame.transform.flip(puffer_fish, True, False)
 
 
     #png transparency
@@ -45,47 +50,22 @@ def draw_background(surf):
         text = custom_font.render("Chomp", True, (255,0,0))
         surf.blit(text, (screen_width/2, screen_height/2-text.get_height()/2))
 
-
-def draw_fishes(surf):
-    #load some fish tiles from sprites
-    green_fish = pygame.image.load("assets/sprites/green_fish.png")
-    green_fish.set_colorkey((0,0,0)) #set png transparency
-    orange_fish = pygame.image.load("assets/sprites/orange_fish.png")
-    orange_fish.set_colorkey((0,0,0))
-    puffer_fish = pygame.image.load("assets/sprites/puffer_fish.png")
-    puffer_fish.set_colorkey((0,0,0))
-    green_fish = pygame.transform.flip(green_fish, True, False)
-    orange_fish = pygame.transform.flip(orange_fish, True, False)
-    puffer_fish = pygame.transform.flip(puffer_fish, True, False)
-
-    for _ in range(5):
-        x = random.randint(0, screen_width-tile_size)
-        y = random.randint(0, screen_height-tile_size)
-        x1 = random.randint(0, screen_width - tile_size)
-        y1 = random.randint(0, screen_height - tile_size)
-        x2 = random.randint(0, screen_width - tile_size)
-        y2 = random.randint(0, screen_height - tile_size)
-        surf.blit(green_fish, (x,y))
-        surf.blit(orange_fish, (x1,y1))
-        surf.blit(puffer_fish, (x2,y2))
-
-
-#Main loop
 running = True
 background = screen.copy()
 draw_background(background)
-draw_fishes(background)
-
+#draw fish on the screen
+for _ in range(5):
+    fishes.add(Fish(random.randint(0, screen_width-tile_size), random.randint(0, screen_height-tile_size)))
 
 while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-    screen.blit(background, (0,0))
- #update the display
-    pygame.display.flip()
+for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+        running = False
+screen.blit(background, (0, 0))
+fishes.draw(background)
+# update the display
+pygame.display.flip()
 
-
-#quitpygame
+# quitpygame
 pygame.quit()
 
