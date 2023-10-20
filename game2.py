@@ -13,7 +13,7 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("A beautiful beach in San Diego")
 
 #load our game font
-custom_font = pygame.font.Font("assets/fonts/Brainfish_Rush.ttf", 128)
+custom_font = pygame.font.Font("assets/fonts/28 Days Later.ttf", 90)
 
 
 def draw_background(surf):
@@ -43,7 +43,7 @@ def draw_background(surf):
 
 #draw the text
         text = custom_font.render("Chomp", True, (255,0,0))
-        surf.blit(text, (screen_width/2, screen_height/2-text.get_height()/2))
+        surf.blit(text, (screen_width/3, screen_height/3-text.get_height()/.5))
 
 
 def draw_fishes(surf):
